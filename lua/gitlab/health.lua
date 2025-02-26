@@ -6,8 +6,9 @@ local M = {}
 local function check_go_version()
   local go_version = io.popen("go version"):read("*a")
   if go_version then
-    local major, minor, _ = go_version:match("(%d+)%.(%d+)%.(%d+)")
-    if major and tonumber(major) >= 1 and tonumber(minor) >= 19 then
+    -- compatible with 1.20rc1
+    local major, minor = go_version:match("(%d+)%.(%d+)")
+    if tonumber(major .. "." .. minor) >= 1.19 then
       return
     else
       return "Go is installed, but version is older than 1.19."
